@@ -54,80 +54,194 @@ a    2
 dtype: int64
 :end:
 
+
+** Paths
+#+begin_src ipython :exports none :session   :results drawer output
+  path_data = '../Datos/article_data_2019-09-14.xlsx'
+#+end_src
+
+#+RESULTS:
+:results:
+:end:
+
 * Clean the data
 #+begin_src ipython :exports  :session   :results drawer output
-  data_master = pd.read_excel('../Datos/article_data_2019-09-14.xlsx', sheet_name='Form1')
-  data_master.info()
+  data_master = pd.read_excel(path_data, sheet_name='Form1')
+  print(data_master.info())
+  print(data_master.head())
 #+end_src
 
 #+RESULTS:
 :results:
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 21 entries, 0 to 20
-Data columns (total 61 columns):
+Data columns (total 50 columns):
 ID                                                                                                    21 non-null int64
-Hora de inicio                                                                                        20 non-null datetime64[ns]
-Hora de finalización                                                                                  20 non-null datetime64[ns]
-Correo electrónico                                                                                    21 non-null object
-Nombre                                                                                                0 non-null float64
 Autor                                                                                                 21 non-null object
-Año                                                                                                   0 non-null float64
-Año2                                                                                                  21 non-null int64
+Año                                                                                                   21 non-null int64
 Título                                                                                                21 non-null object
 Propósito principal                                                                                   21 non-null object
-Procesos cognitivos a impactar por la intervención                                                    1 non-null object
+Procesos cognitivos a impactar por la intervención                                                    21 non-null object
 Destrezas a impactar por la intervención                                                              21 non-null object
-Pregunta                                                                                              0 non-null float64
 Diseño del estudio                                                                                    21 non-null object
-Muestreo                                                                                              1 non-null object
+Diseño inferido                                                                                       21 non-null object
 Cantidad de participantes                                                                             21 non-null int64
-Muestreo probabilístico                                                                               20 non-null object
-Pregunta2                                                                                             0 non-null float64
-Grado de los participantes                                                                            15 non-null object
-Pregunta3                                                                                             0 non-null float64
-Edad de los participantes                                                                             14 non-null object
+Muestreo probabilístico                                                                               21 non-null object
+Grado de los participantes                                                                            21 non-null object
+Edad de los participantes                                                                             21 non-null object
 Idioma                                                                                                21 non-null object
-Cantidad sesiones                                                                                     15 non-null object
-Duración sesiones                                                                                     20 non-null object
-Frecuencia sesiones                                                                                   18 non-null object
+Cantidad sesiones                                                                                     21 non-null object
+Duración sesiones                                                                                     21 non-null object
+Frecuencia sesiones                                                                                   21 non-null object
 Modalidad                                                                                             21 non-null object
-Participantes modalidad grupal                                                                        8 non-null object
+Participantes modalidad grupal                                                                        21 non-null object
 Intervención supervisada                                                                              21 non-null object
 Nombre de intervención                                                                                21 non-null object
-Instrumentos para medir cognición                                                                     1 non-null object
+Instrumentos para medir cognición                                                                     21 non-null object
 Instrumentos para medir lectura                                                                       21 non-null object
-Asignación aleatoria                                                                                  18 non-null object
-Contrabalanceo del orden de las pruebas                                                               17 non-null object
-Variables (características) por las cuales fueron balanceadas los grupos                              15 non-null object
-Pregunta4                                                                                             0 non-null float64
-Variables (características) por las cuales fueron balanceadas los grupos2                             1 non-null object
-Otros controles metodológicos                                                                         2 non-null object
+Asignación aleatoria                                                                                  21 non-null object
+Contrabalanceo del orden de las pruebas                                                               21 non-null object
+Variables (características) por las cuales fueron balanceadas los grupos                              21 non-null object
+Variables (características) por las cuales fueron balanceadas los grupos2                             1 non-null float64
+Otros controles metodológicos                                                                         21 non-null object
 Indicar si los autores proveyeron estadísticas descriptivas de los datos.                             21 non-null object
-Promedio/Mediana                                                                                      20 non-null object
-Desviación estándar                                                                                   20 non-null object
-Intervalos de confianza (CI = inglés, IC = español) para el promedio                                  19 non-null object
-Otras estadísticas descriptivas presentadas                                                           6 non-null object
-Indicar si los autores realizaron estadísticas inferenciales de los datos.                            0 non-null float64
-Nombre de análisis estadísticos inferenciales                                                         18 non-null object
-Nombre de covariados                                                                                  10 non-null object
-p-value específico                                                                                    18 non-null object
-Tamaño del efecto                                                                                     17 non-null object
-Intervalos de confianza (CI = inglés, IC = español) para la diferencia entre promedio o relaciones    19 non-null object
+Promedio/Mediana                                                                                      21 non-null object
+Desviación estándar                                                                                   21 non-null object
+Intervalos de confianza (CI = inglés, IC = español) para el promedio                                  21 non-null object
+Otras estadísticas descriptivas presentadas                                                           18 non-null object
+Comentarios adicionales sobre las estadísticas descriptivas                                           4 non-null object
+Nombre de análisis estadísticos inferenciales                                                         21 non-null object
+Nombre de covariados                                                                                  21 non-null object
+p-value específico                                                                                    21 non-null object
+Tamaño del efecto                                                                                     21 non-null object
+Intervalos de confianza (CI = inglés, IC = español) para la diferencia entre promedio o relaciones    21 non-null object
 Otros controles estadísticos                                                                          1 non-null object
-Procesos cognitivos impactados                                                                        1 non-null object
-Procesos cognitivos no impactados                                                                     1 non-null object
-Tamaño del impacto en cognición                                                                       1 non-null object
-Destrezas de lectura impactadas                                                                       20 non-null object
-Destrezas de lectura no impactadas                                                                    10 non-null object
-Tamaño del impacto en lectura                                                                         16 non-null object
-Diseño inferido                                                                                       20 non-null object
-Comentarios adicionales sobre las estadísticas descriptivas                                           2 non-null object
 Comentarios adicionales sobre estadísticas inferenciales                                              10 non-null object
-Comentarios adicionales sobre el impacto de la intervención en procesos cognitivos                    0 non-null float64
-Comentarios adicionales sobre el impacto de la intervención en las destrezas de lectura               8 non-null object
+Procesos cognitivos impactados                                                                        21 non-null object
+Procesos cognitivos no impactados                                                                     21 non-null int64
+Tamaño del impacto en cognición                                                                       21 non-null object
+Comentarios adicionales sobre el impacto de la intervención en procesos cognitivos                    9 non-null float64
+Destrezas de lectura impactadas                                                                       21 non-null object
+Destrezas de lectura no impactadas                                                                    21 non-null object
+Tamaño del impacto en lectura                                                                         21 non-null object
+Comentarios adicionales sobre el impacto de la intervención en las destrezas de lectura               9 non-null object
 Comentarios generales                                                                                 11 non-null object
-dtypes: datetime64[ns](2), float64(8), int64(3), object(48)
-memory usage: 10.1+ KB
+dtypes: float64(2), int64(4), object(44)
+memory usage: 8.3+ KB
+None
+   ID            Autor   Año  \
+0   7  Callaghan et al  2016   
+1   8    Cazzell et al  2017   
+2   9             Chai  2017   
+3  11   Comaskey et al  2009   
+4  13     Ecalle et al  2009   
+
+                                              Título  \
+0  A randomized controlled trial of an earlyinter...   
+1  Evaluating a Computer Flash-Card Sight-Word Re...   
+2  Improving Early Reading Skills in Young Childr...   
+3  A randomised efficacy study of Web-based synth...   
+4  Lasting effects on literacy skills with a comp...   
+
+                                 Propósito principal  \
+0  Evaluate the effectiveness of the commonly use...   
+1  Evaluate the effects of a CFR program with sel...   
+2  This study evaluated the effectiveness of usin...   
+3  The primary purpose of the present study was t...   
+4  This study examines the effects of a computer-...   
+
+  Procesos cognitivos a impactar por la intervención  \
+0                                                888   
+1                                                888   
+2                                                888   
+3                                                888   
+4                                                888   
+
+            Destrezas a impactar por la intervención  \
+0                                Phonological skills   
+1                             Sight-word acquisition   
+2                      Phonological Awareness Skills   
+3          Phonological abilities and reading skills   
+4  Literacy skills (syllabic units and whole word...   
+
+                                  Diseño del estudio Diseño inferido  \
+0                           Randomized control trial              No   
+1              Multiple-baseline across-tasks design              No   
+2                              Multiple-probe design              No   
+3    Pre–post-test experimental intervention design.              No   
+4  Randomised Control Trial design (RCT) with pre...              No   
+
+   Cantidad de participantes  ...  \
+0                         98  ...   
+1                          2  ...   
+2                          3  ...   
+3                         53  ...   
+4                         28  ...   
+
+  Comentarios adicionales sobre estadísticas inferenciales  \
+0                                                NaN         
+1                       No reportaron estadísticas.          
+2          No se presentaron análisis estadísticos.          
+3                                                NaN         
+4                                                NaN         
+
+  Procesos cognitivos impactados Procesos cognitivos no impactados  \
+0                            888                               888   
+1                            888                               888   
+2                            888                               888   
+3                            888                               888   
+4                            888                               888   
+
+  Tamaño del impacto en cognición  \
+0                             888   
+1                             888   
+2                             888   
+3                             888   
+4                             888   
+
+  Comentarios adicionales sobre el impacto de la intervención en procesos cognitivos  \
+0                                                NaN                                   
+1                                                NaN                                   
+2                                              888.0                                   
+3                                              888.0                                   
+4                                                NaN                                   
+
+                     Destrezas de lectura impactadas  \
+0                         Blending, Non-word reading   
+1                             Sight-word acquisition   
+2                                               None   
+3  Blending CV, Blending VC, Rime articulation an...   
+4  Word recognition, word reading aloud and word ...   
+
+                  Destrezas de lectura no impactadas  \
+0                               Phoneme segmentation   
+1                                               None   
+2                                               None   
+3  Segmenting CV, Segmenting VC, WRAT word readin...   
+4                                               None   
+
+  Tamaño del impacto en lectura  \
+0       n2=.064-.070; d=.35-.36   
+1                           888   
+2                           888   
+3                  n2 = .09-.15   
+4                    d=.79-1.28   
+
+  Comentarios adicionales sobre el impacto de la intervención en las destrezas de lectura  \
+0                                                NaN                                        
+1  Both participants did rapidly acquire words af...                                        
+2  All children in the current study not only imp...                                        
+3                                                NaN                                        
+4                                                NaN                                        
+
+                               Comentarios generales  
+0  Los autores mencionaba que las intervenciones ...  
+1                                                NaN  
+2  No se presentaron estadísticas descriptivas ni...  
+3                                                NaN  
+4                                                NaN  
+
+[5 rows x 50 columns]
 :end:
 
 
