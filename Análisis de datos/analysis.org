@@ -2,7 +2,9 @@
 - Not aplicable (NA) and missing values were inspected. Some errors with the
   data were fixed.
 - All data that was not reported in the articles were coded as /Not reported/.
-- Not applicable was recoded to 888 
+- Not applicable was recoded to 888
+- Columns were rearranged
+- Some columns were removed (uneeded and empty)
 * General 
   #+begin_src ipython :exports none :session   :results drawer output
     import pandas as pd
