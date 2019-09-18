@@ -35,12 +35,15 @@
   :results:
   :end:
 
-Count nan in columns
+** Count nan in columns                                       :useful_script:
 Todo:
 - Add the ability to return only the cols with missing cases
+- Convert empty str to nan, only if the df or Series is of object type (str),
+  otherwise will cause error. Will not work with cols of ints because it these can't contain
+  '' as that will make it a mix type and pandas doesn't allow that.
 #+begin_src ipython :exports none :session   :results drawer output
-  import pandas as pd
-  import numpy as np
+    import pandas as pd
+    import numpy as np
 
 
     def count_nans(data, empy_str_as_nan=True, **kwargs):
