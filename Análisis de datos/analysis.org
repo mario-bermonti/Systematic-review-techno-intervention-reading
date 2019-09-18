@@ -115,51 +115,90 @@ Todo:
            value_count = data[var].value_counts()
            value_count = value_count
 
-This is a second version that works with a series. The idea is to pass
-it to a df throug the apply method.
-#+begin_src ipython :exports none :session   :results drawer output
-  def freq_analysis(data, na=False, percentage=True, name=None, **kwargs):
-      """Conducts frequency analysis (value_counts) to each column of a
-      pandas df and format it as a table suitable for statistical
-      analysis reports.
+           results = value_count.to_frame()
+           results - results.round(4)
+           results.columns = ['Freq count']
+           results.columns.name = value_count.name.capitalize()
 
-      Parameters:
-      -----------
-      data: pandas Series with the data to be analyzed.
-      nan: bool; indicate wheter to include nan count
+           if percentage:
+             value_count_normalized = data[var].value_counts(normalize=True)
+             value_count_normalized = value_count_normalized * 100
+             results['Freq (%)'] = value_count_normalized
 
-      Returns: a Series if percentages are not included, a df if they are.
-      -------
+           print(results)
+           print()
+   d = pd.DataFrame({'a':[1, 1, 1, 4, 5], 'b': [11, 13, 13, 14, 14]})
+   freq_of_multiple_columns(d)
+ #+END_SRC
 
-      Notes:
-      -----
-      1. You need to print the return value of the function in order
-         for it to appear in orgmodes results.
-      2. Uses tabulate for formatting the table.
-      3. value_counts are normalized
+ #+RESULTS:
+ :results:
+ A  Freq count  Freq (%)
+ 1           3      60.0
+ 5           1      20.0
+ 4           1      20.0
 
-      """
-      results = data.value_counts()
-      results = results.to_frame()
-      results.columns = ['Freq count']
+ B   Freq count  Freq (%)
+ 14           2      40.0
+ 13           2      40.0
+ 11           1      20.0
+
+ :end:
+
+*** Focused on 1 column or series                             :useful_script:
+  This is a second version that works with a series. The idea is to pass
+  it to a df throug the apply method.
+  #+begin_src ipython :exports none :session   :results drawer output
+    def freq_analysis(data, na=False, percentage=True, name=None, **kwargs):
+        """Conducts frequency analysis (value_counts) to each column of a
+        pandas df and format it as a table suitable for statistical
+        analysis reports.
+
+        Parameters:
+        -----------
+        data: pandas Series with the data to be analyzed.
+        nan: bool; indicate wheter to include nan count
+
+        Returns: a Series if percentages are not included, a df if they are.
+        -------
+
+        Notes:
+        -----
+        1. You need to print the return value of the function in order
+           for it to appear in orgmodes results.
+        2. Uses tabulate for formatting the table.
+        3. value_counts are normalized
+
+        """
+        results = data.value_counts()
+        results = results.to_frame()
+        results.columns = ['Freq count']
       
-      if name:
-          results.columns.name = name.capitalize()
-      else:
-          results.columns.name = data.name.capitalize()
+        if name:
+            results.columns.name = name.capitalize()
+        else:
+            results.columns.name = data.name.capitalize()
 
-      if percentage:
-        value_count_normalized = data.value_counts(normalize=True)
-        value_count_normalized = value_count_normalized * 100
-        results['Freq (%)'] = value_count_normalized
-        results = results.round(2)
+        if percentage:
+          value_count_normalized = data.value_counts(normalize=True)
+          value_count_normalized = value_count_normalized * 100
+          results['Freq (%)'] = value_count_normalized
+          results = results.round(2)
 
-      return results
+        return results
 
-  d = pd.DataFrame({'a':[1, 1, 1, 4, 5], 'b': [11, 13, 13, 14, 14]})
-  results = freq_analysis(d.a)
-  print(results)
-#+end_src
+    d = pd.DataFrame({'a':[1, 1, 1, 4, 5], 'b': [11, 13, 13, 14, 14]})
+    results = freq_analysis(d.a)
+    print(results)
+  #+end_src
+
+  #+RESULTS:
+  :results:
+  A  Freq count  Freq (%)
+  1           3      60.0
+  5           1      20.0
+  4           1      20.0
+  :end:
 
 #+RESULTS:
 :results:
