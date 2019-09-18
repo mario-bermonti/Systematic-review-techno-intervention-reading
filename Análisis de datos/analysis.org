@@ -5,6 +5,14 @@
 - Not applicable was recoded to 888
 - Columns were rearranged
 - Some columns were removed (uneeded and empty)
+- Design
+  + All SSD variants were coded as SSD
+  + All studies with pre-post test and comparison group were coded as pretest-posttest with comparison
+    group, unless the authors specifically identified the study as an RCT
+  + Studies that compared multiple groups were recoded as Pretest-posttest design with multiple comparison groups
+  + Studies that compared 2 interventions were recoded as Pretest-posttest design with multiple experimental groups
+  + Quasi-experimental designs with pre-posttest was coded as Pretest-posttest design with comparison group(s)
+  + pretest-posttest design with multiple comparison group was coded as pretest-posttest design with comparison group(s)
 * General 
   #+begin_src ipython :exports none :session   :results drawer output
     import pandas as pd
