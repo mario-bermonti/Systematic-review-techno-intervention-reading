@@ -251,6 +251,14 @@ if desired.
 * Clean the data
 #+begin_src ipython :exports  :session   :results drawer output
   data_master = pd.read_excel(path_data, sheet_name='Form1')
+#+end_src
+
+#+RESULTS:
+:results:
+:end:
+
+** See general info about data
+#+begin_src ipython :exports none :session   :results drawer output
   print(data_master.info())
   print(data_master.head())
 #+end_src
@@ -436,4 +444,690 @@ representing Does not Apply.
 #+begin_src ipython :exports none :session   :results drawer 
 count_nans(data_master).to_frame()
 #+end_src
+
+#+RESULTS:
+:results:
+# Out[194]:
+#+BEGIN_EXAMPLE
+  0
+  ID                                         0
+  Author                                     0
+  Year                                       0
+  Title                                      0
+  Purpose                                    0
+  Cognitive processes to impact              0
+  Reading skills to impact                   0
+  Design                                     0
+  Design_coded                               0
+  Inferred design                            0
+  Number of participants                     0
+  Probabilistic sampling                     0
+  Grade                                      0
+  Age                                        0
+  Language                                   0
+  Session number                             0
+  Session duration                           0
+  sessions frequency                         0
+  Modality                                   0
+  Participants in group modality             0
+  Supervision                                0
+  Intervention name                          0
+  Instruments to measure cognition           0
+  Instruments to measure reading skills      0
+  Random assignment                          0
+  Assessment counterbalancing                0
+  Variables for group balance                0
+  Other methodological controls              0
+  Descriptive statistics provided            0
+  Mean/Median                                0
+  Standard deviation                         0
+  Mean confidence interval                   0
+  Other descriptive statistics               0
+  Comments about descriptive statistics     17
+  Inferential statistics                     0
+  Covariate                                  0
+  Specific p-value provided                  0
+  Effect size provided                       0
+  Mean difference confidence interval        0
+  Other statistical controls                20
+  Comments inferential statistics           11
+  Improved cognitive processes               0
+  Cognitive processes that did not improve   0
+  Effect size cognition                      0
+  Comments effect on cognition              12
+  Improved reading skills                    0
+  Reading skills no improvement              0
+  Effect size reading skills                 0
+  Comments effect on reading skills         12
+  General comments                           8
+#+END_EXAMPLE
+:end:
+
+
+** Collapse values (recode)
+*** Design
+#+begin_src ipython :exports none :session   :results drawer output
+  values_to_recode_design = {
+      "Quasi-experimental design with pretest-posttest": "Pretest-posttest design with comparison group(s)",
+      "pretest-posttest design with multiple comparison groups": "Pretest-posttest design with comparison group(s)",
+      "Pretest-posttest design with comparison group": "Pretest-posttest design with comparison group(s)"
+      }
+  data_master['Design_coded'].replace(values_to_recode_design, inplace=True)
+  print(data_master["Design_coded"].unique())
+#+end_src
+
+#+RESULTS:
+:results:
+['Randomized control trial with pretest-posttest' 'Single subject design'
+ 'Pretest-posttest design with multiple experimental groups' 'Case study'
+ 'Pretest-posttest design'
+ 'Pretest-posttest design with comparison group(s)']
+:end:
+*** Grade
+#+begin_src ipython :exports none :session   :results drawer output
+   values_to_recode_grade = {"2": "K - 4",
+                             "1": "K - 4",
+                             "K": "K - 4",
+                             "K - 2": "K - 4",
+                             "1 - 2": "K - 4",
+                             "4": "K - 4",
+                             "PreK - K": "K - 4",
+                             "1 - 3": "K - 4"}
+   data_master['Grade'].replace(values_to_recode_grade, inplace=True)
+   print(data_master['Grade'].unique())
+#+end_src
+
+#+RESULTS:
+:results:
+['Not reported' 'K - 4' '6 - 7']
+:end:
+
+*** Age
+#+begin_src ipython :exports none :session   :results drawer output
+  values_to_recode_age = {"4 - 5": "4 - 8",
+                            "4 - 6": "4 - 8",
+                            "5 - 6": "4 - 8",
+                            6: "4 - 8",
+                            "6 - 7": "4 - 8",
+                            7: "4 - 8",
+                            "8": "4 - 8",
+                            "9 and 12": "9 - 13",
+                            "13": "9 - 13"}
+
+  data_master['Age'].replace(values_to_recode_age, inplace=True)
+  print(data_master['Age'].unique())
+#+end_src
+
+#+RESULTS:
+:results:
+['4 - 8' '9 - 13' 'Not reported']
+:end:
+
+*** Session number
+#+begin_src ipython :exports none :session   :results drawer output
+  values_to_recode_session_number = {6: "less than 20",
+                                     "8": "less than 20",
+                                     "12": "less than 20",
+                                     "14 - 17": "less than 20",
+                                     "20": "20 - 27",
+                                     25: "20 - 27",
+                                     "27": "20 - 27",
+                                     40: "40 or more",
+                                     60: "40 or more",
+                                     93.4: "40 or more",
+                                     "110.2": "40 or more"}
+
+
+
+  data_master['Session number'].replace(values_to_recode_session_number, inplace=True)
+  print(data_master['Session number'].unique())
+#+end_src
+
+#+RESULTS:
+:results:
+['Not reported' 'less than 20' '40 or more' '20 - 27']
+:end:
+
+*** Session duration
+#+begin_src ipython :exports none :session   :results drawer output
+   values_to_recode_session_duration = {"5": "less than 10",
+                                        "7": "less than 10",
+                                        "10 - 15": "10 - 30",
+                                        "13": "10 - 30",
+                                        "15": "10 - 30",
+                                        "15 - 25": "10 - 30",
+                                        "20 - 30": "10 - 30",
+                                        "25 - 30": "10 - 30",
+                                        "30": "10 - 30",
+                                        "45": "more than 45",
+                                        "60": "more than 45"}
+
+
+   data_master['Session duration'].replace(values_to_recode_session_duration, inplace=True)
+   print(data_master['Session duration'].unique())
+#+end_src
+
+#+RESULTS:
+:results:
+['10 - 30' 'less than 10' 'more than 45' 'Not reported']
+:end:
+
+*** Participants in group modality
+#+begin_src ipython :exports none :session   :results drawer output
+  values_to_recode_participants_group = {"2": "2 - 3",
+                                      "2 - 3": "2 - 3",
+                                      "3": "2 - 3",}
+
+  data_master['Participants in group modality'].replace(values_to_recode_participants_group, inplace=True)
+  print(data_master['Participants in group modality'].unique())
+#+end_src
+
+#+RESULTS:
+:results:
+[888 '2 - 3' '4' 'Not reported' '3 - 7']
+:end:
+
+* Results
+** Frequency analysis
+#+begin_src ipython :exports none :session   :results drawer output
+freq_of_multiple_columns(data_master.iloc[:, 2:])
+#+end_src
+
+#+RESULTS:
+:results:
+Year  Freq count   Freq (%)
+2017           5  23.809524
+2013           4  19.047619
+2018           4  19.047619
+2015           2   9.523810
+2010           2   9.523810
+2009           2   9.523810
+2019           1   4.761905
+2016           1   4.761905
+
+Title                                               Freq count  Freq (%)
+Lasting effects on literacy skills with a compu...           1  4.761905
+Predicting word-level reading fluency outcomes ...           1  4.761905
+Effects of Three Interventions on the Reading S...           1  4.761905
+Effectiveness of an early reading intervention ...           1  4.761905
+Computer-assisted learning in young poor reader...           1  4.761905
+Evaluating the promise of computer-based readin...           1  4.761905
+Computerized trainings in four groups of strugg...           1  4.761905
+Impact of a computer-based intervention in\nChi...           1  4.761905
+Learning through play: The impact of web-based ...           1  4.761905
+Profiles of French poor readers: Underlying dif...           1  4.761905
+Supporting fourth-grade students’ word identifi...           1  4.761905
+Effects of Supplemental Computer-Assisted Recip...           1  4.761905
+Evaluating a Computer Flash-Card Sight-Word Rec...           1  4.761905
+A randomised efficacy study of Web-based synthe...           1  4.761905
+Assessing the Effectiveness of Two Theoreticall...           1  4.761905
+A Design Case Study of a Tangible System Suppor...           1  4.761905
+Improving Early Reading Skills in Young Childre...           1  4.761905
+Computer-assisted learning in young poor reader...           1  4.761905
+A randomized controlled trial of an early inter...           1  4.761905
+Enhanced recognition of written words and enjoy...           1  4.761905
+An evaluation of the effectiveness of a compute...           1  4.761905
+
+Purpose                                             Freq count  Freq (%)
+Determine whether a software based on grapho-sy...           1  4.761905
+Evaluate the impact of an explicit, sustained, ...           1  4.761905
+Evaluate the effects of a supplemental phonemic...           1  4.761905
+Evaluate the effectiveness of the commonly used...           1  4.761905
+Examine the effectiveness of word structure pra...           1  4.761905
+Assess the efficacy of GraphoGame as a suppleme...           1  4.761905
+Evaluate the effects of a CFR program with self...           1  4.761905
+Investigate the efficacy of an early reading in...           1  4.761905
+Determine whether the use of a computer compute...           1  4.761905
+Investigate if the whole-word multimedia softwa...           1  4.761905
+Examine the long-term effect of grapho-syllabic...           1  4.761905
+Examine the effects of a computer-assisted lear...           1  4.761905
+Compare three different interventions, one focu...           1  4.761905
+Evaluate the effectiveness of using a researche...           1  4.761905
+Determine if Mandarin-speaking EFL children imp...           1  4.761905
+Build a model of the predictive value of word-l...           1  4.761905
+Evaluate the effects of parent implemented Funn...           1  4.761905
+Investigate the effects of two types of reading...           1  4.761905
+Determine whether the final version website wit...           1  4.761905
+Determine the effects of a computerized trainin...           1  4.761905
+Explore the effectiveness of a Web-based litera...           1  4.761905
+
+Cognitive processes to impact                       Freq count   Freq (%)
+888                                                         20  95.238095
+Executive loaded working memory and phonologica...           1   4.761905
+
+Reading skills to impact                            Freq count   Freq (%)
+Phonological skills                                          3  14.285714
+word reading                                                 2   9.523810
+phonics, phonological skills, word reading, rap...           2   9.523810
+Word reading, reading fluency, vocabulary, read...           1   4.761905
+Phonological skills, word reading                            1   4.761905
+phonological skills, phonics, rapid automatized...           1   4.761905
+Word reading                                                 1   4.761905
+Word reading, Reading comprehension                          1   4.761905
+vocabulary, word reading, spelling, phonologica...           1   4.761905
+Reading skills (not specified), spelling                     1   4.761905
+phonological skills                                          1   4.761905
+Phonological skills, reading fluency, vocabular...           1   4.761905
+ word reading, Reading comprehension, phonologi...           1   4.761905
+phonics, phonological skills, vocabulary                     1   4.761905
+Reading comprehension, word reading                          1   4.761905
+Phonological skills, reading skills (not specif...           1   4.761905
+word reading, reading fluency, reading comprehe...           1   4.761905
+
+Design                                              Freq count  Freq (%)
+longitudinal                                                 2  9.523810
+Randomized control trial                                     2  9.523810
+Classical training design involving three phase...           1  4.761905
+Classical training design involving three phase...           1  4.761905
+Randomized Control Trial (RCT) with pretest-pos...           1  4.761905
+Case study design with a pre- and post-test.                 1  4.761905
+Randomised Control Trial design (RCT) with pre ...           1  4.761905
+Quasi-experimental study                                     1  4.761905
+Multiple probe across students design                        1  4.761905
+Factorial 5 x 2 split-plot design                            1  4.761905
+pre- and posttest with comparison group                      1  4.761905
+Experimental: pretest-posttest with comparison ...           1  4.761905
+Multiple-baseline across-tasks design                        1  4.761905
+Pretest-posttest with control group (2 pc inter...           1  4.761905
+pretest-posttest design                                      1  4.761905
+Pre–post-test experimental intervention design.              1  4.761905
+AB-BA counterbalanced intervention design                    1  4.761905
+Multiple-probe design                                        1  4.761905
+pretest-posttest with multiple comparison groups             1  4.761905
+
+Design_coded                                        Freq count   Freq (%)
+Pretest-posttest design with multiple experimen...           7  33.333333
+Pretest-posttest design with comparison group(s)             5  23.809524
+Randomized control trial with pretest-posttest               4  19.047619
+Single subject design                                        3  14.285714
+Case study                                                   1   4.761905
+Pretest-posttest design                                      1   4.761905
+
+Inferred design  Freq count   Freq (%)
+No                       17  80.952381
+Yes                       4  19.047619
+
+Number of participants  Freq count  Freq (%)
+31                               1  4.761905
+77                               1  4.761905
+3                                1  4.761905
+130                              1  4.761905
+744                              1  4.761905
+166                              1  4.761905
+4                                1  4.761905
+136                              1  4.761905
+10                               1  4.761905
+44                               1  4.761905
+78                               1  4.761905
+29                               1  4.761905
+17                               1  4.761905
+18                               1  4.761905
+2                                1  4.761905
+53                               1  4.761905
+87                               1  4.761905
+25                               1  4.761905
+27                               1  4.761905
+28                               1  4.761905
+98                               1  4.761905
+
+Probabilistic sampling  Freq count  Freq (%)
+No                              19  90.47619
+Yes                              2   9.52381
+
+Grade         Freq count   Freq (%)
+K - 4                 14  66.666667
+Not reported           6  28.571429
+6 - 7                  1   4.761905
+
+Age           Freq count   Freq (%)
+4 - 8                 14  66.666667
+Not reported           5  23.809524
+9 - 13                 2   9.523810
+
+Language   Freq count   Freq (%)
+English            12  57.142857
+French              5  23.809524
+Norwegian           1   4.761905
+Finnish             1   4.761905
+Spanish             1   4.761905
+Swedish             1   4.761905
+
+Session number  Freq count   Freq (%)
+Not reported             8  38.095238
+40 or more               5  23.809524
+20 - 27                  4  19.047619
+less than 20             4  19.047619
+
+Session duration  Freq count   Freq (%)
+10 - 30                   16  76.190476
+less than 10               2   9.523810
+more than 45               2   9.523810
+Not reported               1   4.761905
+
+Sessions frequency  Freq count   Freq (%)
+4                            6  28.571429
+5                            5  23.809524
+3                            4  19.047619
+Not reported                 3  14.285714
+3 - 4                        2   9.523810
+2 - 3                        1   4.761905
+
+Modality    Freq count   Freq (%)
+Individual          11  52.380952
+Group               10  47.619048
+
+Participants in group modality  Freq count   Freq (%)
+888                                     10  47.619048
+Not reported                             5  23.809524
+2 - 3                                    4  19.047619
+3 - 7                                    1   4.761905
+4                                        1   4.761905
+
+Supervision     Freq count  Freq (%)
+Supervised              19  90.47619
+Not supervised           2   9.52381
+
+Intervention name                                   Freq count  Freq (%)
+GraphoGame                                                   2  9.523810
+Researcher-developed (no name provided)                      2  9.523810
+Grapho-syllabic training (GST) and Grapho-phone...           2  9.523810
+Researcher-developed: Computer-based flash-card...           1  4.761905
+GraphoGame (Rime-GraphoGame and Rime-Phoneme)                1  4.761905
+Lexia Reading Core 5 (Lexia)                                 1  4.761905
+COMPHOT and Omega-Interactive Sentences                      1  4.761905
+Funnix and Headsprout                                        1  4.761905
+GraphoGame and On track ABC                                  1  4.761905
+Chassymo, Locotex                                            1  4.761905
+Grapho-syllabic training, Comprehension trainin...           1  4.761905
+A Balanced Reading Approach for Canadians Desig...           1  4.761905
+PBS KIDS Island                                              1  4.761905
+Oxford Reading Tree (ORT) for Clicker                        1  4.761905
+Touch Sound                                                  1  4.761905
+8 great word patters                                         1  4.761905
+PhonoBlocks                                                  1  4.761905
+trainertext                                                  1  4.761905
+
+Instruments to measure cognition          Freq count   Freq (%)
+888                                               20  95.238095
+Working Memory Test Battery for Children           1   4.761905
+
+Instruments to measure reading skills               Freq count  Freq (%)
+Dynamic Indicators of Basic Early Literacy Skil...           1  4.761905
+Gates-MacGinitie Reading Test, Words Their Way ...           1  4.761905
+Phonological Assessment Battery Second Edition ...           1  4.761905
+Timé3, Alouette, Semantic similarity judgment t...           1  4.761905
+Dynamic Indicators of Basic Early Literacy Skills            1  4.761905
+TOWRE, Phonological Assessment Battery, PhAB, B...           1  4.761905
+Researcher-developed measures, ODéDys, THaPHo, ...           1  4.761905
+Phonological Awareness Literacy Screening PreK ...           1  4.761905
+Listening comprehension task, Silent word readi...           1  4.761905
+Which Picture is the Correct one?, Woodcock Rea...           1  4.761905
+Six rule-based lessons                                       1  4.761905
+Incorporated into the intervention                           1  4.761905
+Word reading aloud task                                      1  4.761905
+Lexical decision task (LDT), Single word oral r...           1  4.761905
+researcher-developed measures, Norwegian Vocabu...           1  4.761905
+Word recognition, aloud word reading, and Word ...           1  4.761905
+Peabody Picture Vocabulary Test (PPVT), Letter-...           1  4.761905
+Not specified (instruments seemed to have been ...           1  4.761905
+Flash-card words (researcher-developed measures)             1  4.761905
+British Picture Vocabulary Subscale II, BAS II,...           1  4.761905
+Lukilasse Graded Fluency Test                                1  4.761905
+
+Random assignment  Freq count   Freq (%)
+Yes                        12  57.142857
+No                          6  28.571429
+888                         3  14.285714
+
+Assessment counterbalancing  Freq count   Freq (%)
+No                                   15  71.428571
+888                                   3  14.285714
+Yes                                   3  14.285714
+
+Variables for group balance  Freq count   Freq (%)
+No                                    8  38.095238
+Yes                                   7  33.333333
+888                                   6  28.571429
+
+Other methodological controls                       Freq count   Freq (%)
+888                                                         19  90.476190
+Groups were balanced on pretest-reading skills               1   4.761905
+Only the intervention groups were balanced (not...           1   4.761905
+
+Descriptive statistics provided  Freq count  Freq (%)
+Yes                                      19  90.47619
+No                                        2   9.52381
+
+Mean/median  Freq count   Freq (%)
+Yes                  18  85.714286
+No                    2   9.523810
+888                   1   4.761905
+
+Standard deviation  Freq count   Freq (%)
+Yes                         15  71.428571
+No                           5  23.809524
+888                          1   4.761905
+
+Mean confidence interval  Freq count   Freq (%)
+No                                15  71.428571
+888                                4  19.047619
+Yes                                2   9.523810
+
+Other descriptive statistics            Freq count   Freq (%)
+No                                              13  61.904762
+888                                              2   9.523810
+Percentage, total                                1   4.761905
+Rate (wpm) and accuracy of results               1   4.761905
+Session total, range                             1   4.761905
+Percentage of correct responses, range           1   4.761905
+Adjusted means                                   1   4.761905
+min, max                                         1   4.761905
+
+Comments about descriptive statistics               Freq count  Freq (%)
+888                                                          2      50.0
+Descriptive data was presented in narrative (on...           1      25.0
+No reportaron estadísticas.                                  1      25.0
+
+Inferential statistics          Freq count   Freq (%)
+ANCOVA                                   7  33.333333
+ANOVA                                    6  28.571429
+888                                      3  14.285714
+Regression analysis                      2   9.523810
+Wilcoxon signed-rank test                1   4.761905
+ANCOVA, ANOVAs, and Regression           1   4.761905
+t-test                                   1   4.761905
+
+Covariate                                           Freq count   Freq (%)
+None                                                         8  38.095238
+Pretest reading skills                                       7  33.333333
+888                                                          3  14.285714
+ceiling effects                                              1   4.761905
+Pre-test reading skills,  age, income, mother's...           1   4.761905
+general ability (IQ)                                         1   4.761905
+
+Specific p-value provided  Freq count   Freq (%)
+Yes                                14  66.666667
+No                                  4  19.047619
+888                                 3  14.285714
+
+Effect size provided  Freq count   Freq (%)
+Yes                           16  76.190476
+888                            3  14.285714
+No                             2   9.523810
+
+Mean difference confidence interval  Freq count   Freq (%)
+No                                           18  85.714286
+Yes                                           3  14.285714
+
+Other statistical controls                          Freq count  Freq (%)
+Used standard scores to control for age-related...           1     100.0
+
+Comments inferential statistics                     Freq count  Freq (%)
+The p-values and effect sizes were only provide...           1      10.0
+No reportaron estadísticas.                                  1      10.0
+specific p-values were only provided for nonsig...           1      10.0
+The covariate was inferred based on the descrip...           1      10.0
+All the parent's variables were integrated into...           1      10.0
+The presentation of p-values was inconsistent. ...           1      10.0
+Analysis of Covariance (ANCOVA) was only used f...           1      10.0
+The data was presented in narrative (didn't use...           1      10.0
+Wilcoxon analyses were conducted because of sam...           1      10.0
+No inferential statistics were  conducted                    1      10.0
+
+Improved cognitive processes                        Freq count   Freq (%)
+888                                                         20  95.238095
+Executive loaded working memory and phonologica...           1   4.761905
+
+Cognitive processes that did not improve  Freq count  Freq (%)
+888                                               21     100.0
+
+Effect size cognition  Freq count   Freq (%)
+888                            20  95.238095
+d = .65 - .69                   1   4.761905
+
+Comments effect on cognition  Freq count  Freq (%)
+888.0                                  9     100.0
+
+Improved reading skills                             Freq count   Freq (%)
+None                                                         3  14.285714
+aloud word reading                                           1   4.761905
+High SES: rapid naming; low SES: letter sound k...           1   4.761905
+Word recognition, aloud word reading, and word ...           1   4.761905
+Blending, Non-word reading                                   1   4.761905
+word reading, sentence reading, spelling                     1   4.761905
+word reading fluency                                         1   4.761905
+Sight-word acquisition                                       1   4.761905
+Blending CV, Blending VC, rime articulation and...           1   4.761905
+Oral Reading Fluency                                         1   4.761905
+Reading and Spelling                                         1   4.761905
+Reading comprehension, Passage comprehension, W...           1   4.761905
+Written word recognition, Written word naming, ...           1   4.761905
+Silent word reading, aloud word reading and Rea...           1   4.761905
+word identification, reading fluency, listening...           1   4.761905
+Phoneme Segmentation Fluency                                 1   4.761905
+lowercase letter knowledge, letter sound awaren...           1   4.761905
+decoding skills, phonological skills, rapid naming           1   4.761905
+Grapho-syllabic training: written word recognit...           1   4.761905
+
+Reading skills no improvement                       Freq count   Freq (%)
+None                                                        12  57.142857
+spelling                                                     1   4.761905
+Phoneme segmentation                                         1   4.761905
+Initial Sound Fluency, Letter Naming Fluency, W...           1   4.761905
+uppercase letter knowledge, uppercase letter na...           1   4.761905
+vocabulary, word reading, spelling, phonologica...           1   4.761905
+reading comprehension, Vocabulary, Oral reading...           1   4.761905
+Phonological awareness, letter name knowledge, ...           1   4.761905
+Segmenting CV, Segmenting VC, WRAT word reading...           1   4.761905
+Grapho-syllabic training: listening and reading...           1   4.761905
+
+Effect size reading skills                          Freq count   Freq (%)
+888                                                          5  23.809524
+Posttest: d = .22 - 1.01; follow-up: -.30 - 1.01             1   4.761905
+d = 1.5 - 12.1                                               1   4.761905
+Hedges G = .57 - .75                                         1   4.761905
+d = .40 - .68                                                1   4.761905
+d = 1.09 - 6.96                                              1   4.761905
+n2 = .064 - .070; d = .35 - .36                              1   4.761905
+Grapho-syllabic training: r = .80 - .84\nCompre...           1   4.761905
+n2 =  .33                                                    1   4.761905
+d = .94                                                      1   4.761905
+d = .79 - 1.28                                               1   4.761905
+eta squared = .06 - .14                                      1   4.761905
+d = .27 - .97                                                1   4.761905
+d = .45 - 1.34                                               1   4.761905
+η2 = .04 - .159                                              1   4.761905
+n2 = .09 - .15                                               1   4.761905
+High SES: n2 = .26; low SES: n2 = .21                        1   4.761905
+
+Comments effect on reading skills                   Freq count   Freq (%)
+Comprehension almost reached statistical signif...           1  11.111111
+The effect sizes in this study mean the interve...           1  11.111111
+The authors provided CI for effect size and the...           1  11.111111
+Both participants did rapidly acquire words aft...           1  11.111111
+Participants with difficulties in different ski...           1  11.111111
+All p-values were very close to reaching statis...           1  11.111111
+All children in the current study not only impr...           1  11.111111
+888                                                          1  11.111111
+The results extracted are only focused on the p...           1  11.111111
+
+General comments                                    Freq count  Freq (%)
+Los autores mencionaba que las intervenciones s...           1  7.692308
+This was a SSD                                               1  7.692308
+Se calculó el total de sesiones multiplicando l...           1  7.692308
+El total de sesiones que ellos reportan (8) no ...           1  7.692308
+2 interventions given simultaneously                         1  7.692308
+Very little control over the number of sessions...           1  7.692308
+Very nice study but complicated because of very...           1  7.692308
+The authors were interested in comparing the ef...           1  7.692308
+Missing information about instruments and slopp...           1  7.692308
+Los dos estudios de Ecalle et al 2013 no especi...           1  7.692308
+No se presentaron estadísticas descriptivas ni ...           1  7.692308
+60 lessons were the maximum number of sessions               1  7.692308
+Many statistical analyses were conducted                     1  7.692308
+
+:end:
+
+** Freq analysis alternative (patterns)
+**** Reading skills to impact
+   #+begin_src ipython :exports none :session   :results drawer output
+     skills_to_impact = data_master["Reading skills to impact"]
+     skill_to_impact_count = split_count(skills_to_impact)
+     print(skill_to_impact_count)
+   #+end_src
+
+   #+RESULTS:
+   :results:
+   Reading skills to impact        Freq count  Freq (%)
+   word reading                            13     24.53
+   phonological skills                     13     24.53
+   vocabulary                               7     13.21
+   reading comprehension                    6     11.32
+   phonics                                  4      7.55
+   rapid automatized naming                 3      5.66
+   reading fluency                          3      5.66
+   reading skills (not specified)           2      3.77
+   spelling                                 2      3.77
+   :end:
+
+**** Improved reading skills 
+   #+begin_src ipython :exports none :session   :results drawer output
+     skills_to_impact = data_master["Reading skills to impact"]
+     skill_to_impact_count = split_count(skills_to_impact)
+     print(skill_to_impact_count)
+   #+end_src
+
+   #+RESULTS:
+   :results:
+   Reading skills to impact        Freq count  Freq (%)
+   word reading                            13     24.53
+   phonological skills                     13     24.53
+   vocabulary                               7     13.21
+   reading comprehension                    6     11.32
+   phonics                                  4      7.55
+   rapid automatized naming                 3      5.66
+   reading fluency                          3      5.66
+   reading skills (not specified)           2      3.77
+   spelling                                 2      3.77
+   :end:
+
+** Analysis of quantitative data
+#+begin_src ipython :exports none :session   :results drawer output
+  results_quanti = data_master['Number of participants'].describe()
+  print(results_quanti.round(2))
+#+end_src
+
+#+RESULTS:
+:results:
+count     21.00
+mean      86.05
+std      158.05
+min        2.00
+25%       18.00
+50%       31.00
+75%       87.00
+max      744.00
+Name: Number of participants, dtype: float64
+:end:
+
 
