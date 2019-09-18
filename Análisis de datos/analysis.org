@@ -24,34 +24,42 @@ Todo:
   import numpy as np
 
 
-  def count_nans(data, empy_str_as_nan=True, **kwargs):
-      """Return the number of nan's in each column.
+    def count_nans(data, empy_str_as_nan=True, **kwargs):
+        """Return the number of nan's in each column.
 
-      Parameters:
-      ----------
-      Data: pd.df or pd.Series.
-      empty_str_as_nan: bool, default True; indicates wheter to turn
-      empty strings to nans."""
+        Parameters:
+        ----------
+        Data: pd.df or pd.Series.
+        empty_str_as_nan: bool, default True; indicates wheter to turn
+        empty strings to nans."""
 
-      if empy_str_as_nan:
-          data.replace({"": np.nan}, inplace=True)
+        if empy_str_as_nan:
+            data.replace({"": np.nan}, inplace=True)
 
-      nan_count = data.isna().sum()
+        nan_count = data.isna().sum()
 
-      return nan_count
+        return nan_count
 
-  def test_count_nans_empty_str():
-      df = pd.DataFrame({'a': ['1', '2', '3', '', np.nan]})
-      nan_count = count_nans(df)
-      print(nan_count)
+    def test_count_nans_str_list():
+        df = pd.DataFrame({'a': ['1', '2', '3', '', np.nan],
+                           'b': ['f', 'd', '', 'k', '']})
+        nan_count_expected = pd.Series({"a": 2, "b": 2})
+        nan_count_obs = count_nans(df)
+        assert nan_count_expected.equals(nan_count_obs)
 
-test_count_nans_empty_str()
+    def test_count_nans_int_list():
+        df = pd.DataFrame({'a': [1, 2, 3, np.nan, np.nan],
+                           'b': [7, 8, 9, 10, np.nan]})
+        nan_count_expected = pd.Series({"a": 2, "b": 1})
+        nan_count_obs = count_nans(df)
+        assert nan_count_expected.equals(nan_count_obs)
+
+  test_count_nans_str_list()
+  # test_count_nans_int_list()
 #+end_src
 
 #+RESULTS:
 :results:
-a    2
-dtype: int64
 :end:
 
 
