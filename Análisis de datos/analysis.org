@@ -13,6 +13,17 @@
   + Studies that compared 2 interventions were recoded as Pretest-posttest design with multiple experimental groups
   + Quasi-experimental designs with pre-posttest was coded as Pretest-posttest design with comparison group(s)
   + pretest-posttest design with multiple comparison group was coded as pretest-posttest design with comparison group(s)
+- Reading skills
+  Targeted, improved and not improved reading skill were recoded into broad these broad categories:
+  + phonological skills (phonemic and phonological awareness)
+  + word reading
+  + Vocabulary
+  + reading comprehension
+  + phonics
+  + rapid automatized naming
+  + reading fluency
+  + spelling
+  + reading: Otherwise not specified
 * General 
   #+begin_src ipython :exports none :session   :results drawer output
     import pandas as pd
