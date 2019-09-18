@@ -200,13 +200,44 @@ Todo:
   4           1      20.0
   :end:
 
-#+RESULTS:
-:results:
-A  Freq count  Freq (%)
-1           3      60.0
-5           1      20.0
-4           1      20.0
-:end:
+*** Count patters                                             :useful_script:
+To improve it, the code that counts it should be moved to another function. It
+should stop at returning the new Series, which could be integrated into the df
+if desired.
+ #+begin_src ipython :exports none :session   :results drawer output
+      def split_count(data, delimiter=", ", *args, **kwargs):
+          """Splits each element in a Series (including df's columns) based
+          on the specified delimiter and counts the number of occurrences of each
+          string across all Series values.
+
+          Parameters
+          ----------
+          data: Series (df's column); Series of strings that has a common delimiter
+          delimiter: str; specifies how to split each string.
+
+
+          Returns
+          -------
+          value_count: pd.DataFrame; One column has the string and the other has
+          the value count.
+          """
+
+          ## clean the data
+          data_raw = data.str.strip()
+          data_raw = data_raw.str.lower()
+
+          data_clean = []
+          for value in data_raw:
+              values_indiv = value.split(", ")
+              data_clean.extend(values_indiv)
+          data_count = pd.Series(data_clean, name=data_raw.name)
+          data_count = freq_analysis(data_count)
+          return data_count
+ #+end_src
+
+ #+RESULTS:
+ :results:
+ :end:
 
 ** Paths
 #+begin_src ipython :exports none :session   :results drawer output
