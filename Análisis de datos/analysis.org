@@ -1105,28 +1105,28 @@ Many statistical analyses were conducted                     1  7.692308
 
 :end:
 
-** Freq analysis alternative (patterns)
+** Freq analysis of coded variables 
 **** Reading skills to impact
    #+begin_src ipython :exports none :session   :results drawer output
-     skills_to_impact = data_master["Reading skills to impact"]
+     skills_to_impact = data_clean["Reading skills to impact_coded"]
      skill_to_impact_count = split_count(skills_to_impact)
      print(skill_to_impact_count)
    #+end_src
 
    #+RESULTS:
    :results:
-   Reading skills to impact        Freq count  Freq (%)
-   word reading                            13     24.53
-   phonological skills                     13     24.53
-   vocabulary                               7     13.21
-   reading comprehension                    6     11.32
-   phonics                                  4      7.55
-   rapid automatized naming                 3      5.66
-   reading fluency                          3      5.66
-   reading skills (not specified)           2      3.77
-   spelling                                 2      3.77
+   Reading skills to impact_coded  Freq count  Freq (%)
+   phonological skills                     15     26.79
+   word reading                            14     25.00
+   reading comprehension                    6     10.71
+   vocabulary                               6     10.71
+   phonics                                  4      7.14
+   reading fluency                          3      5.36
+   spelling                                 3      5.36
+   rapid automatized naming                 3      5.36
+   reading skills (not specified)           2      3.57
    :end:
-
+   
 **** Improved reading skills 
    #+begin_src ipython :exports none :session   :results drawer output
      improved_reading_skills = data_clean["Improved reading skills_coded"]
