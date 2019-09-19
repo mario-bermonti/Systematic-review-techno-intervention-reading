@@ -1148,6 +1148,36 @@ Many statistical analyses were conducted                     1  7.692308
    spelling                                 2      3.77
    :end:
 
+**** Effect size
+     #+begin_src ipython :exports none :session   :results drawer output
+       effect_sizes_reading = data_clean["Effect size reading skills"]
+       es_index = ["d", "n2", "g", "r"]
+       es_count = {}
+       for index in es_index:
+           pat = "{} = ".format(index)
+           count = effect_sizes_reading.str.count(pat)
+           count = count.sum()
+           es_count[index] = count
+
+       es_count_table = pd.DataFrame(es_count.values(), es_count.keys())
+       es_count_table.columns = ["Count"]
+       es_count_table.index.name = "ES index"
+       print(es_count_table)
+
+     #+end_src
+
+     #+RESULTS:
+     :results:
+               Count
+     ES index       
+     d             9
+     n2            5
+     g             1
+     r             1
+     :end:
+
+
+
 ** Analysis of quantitative data
 #+begin_src ipython :exports none :session   :results drawer output
   results_quanti = data_master['Number of participants'].describe()
