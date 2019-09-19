@@ -37,6 +37,17 @@
     * medium: 0.06 - .13
     * large: 0.14 or greater
 
+* Analysis plan
+- Categorical/ordinal data: freq analysis
+- Quantitative data recoding
+  + Grade
+  + Age
+  + Design
+  + Session number
+  + Session duration
+  + Participants in group modality
+  + Improved reading skills
+  + Reading skills no improvement
   #+begin_src ipython :exports none :session   :results drawer output
     import pandas as pd
     from stats import formatting
