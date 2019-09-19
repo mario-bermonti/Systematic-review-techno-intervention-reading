@@ -271,7 +271,28 @@ if desired.
 :results:
 :end:
 
-* Clean the data
+** Clean the values
+   TODO: consider modifying it so it can be used with series (maybe it should
+   only contain the code for clean on sequence, and the caller should use
+   the apply method on a df.
+#+begin_src ipython :exports none :session   :results drawer output
+  def clean_values(data, lower=True, *args, **kwargs):
+      """ Cleans the df data converting to lowercase all values which are strings.
+
+      Parameters
+      ----------
+      data: pd.df; Dataframe.
+
+
+      Returns
+      -------
+      data_clean: same as data; Object of the same type as data with all values
+          as lowercase.
+      """
+      data_clean = data_master.apply(lambda x: x.str.lower() if(x.dtype == 'object') else x)
+
+      return data_clean
+#+end_src
 #+begin_src ipython :exports  :session   :results drawer output
   data_master = pd.read_excel(path_data, sheet_name='Form1')
 #+end_src
