@@ -264,7 +264,7 @@ if desired.
 
 ** Paths
 #+begin_src ipython :exports none :session   :results drawer output
-  path_data = '../Datos/article_data_2019-09-14.xlsx'
+  path_data = '../Datos/article_data_master.xlsx'
 #+end_src
 
 #+RESULTS:
