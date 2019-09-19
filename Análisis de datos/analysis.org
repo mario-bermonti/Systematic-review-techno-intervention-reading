@@ -1129,9 +1129,27 @@ Many statistical analyses were conducted                     1  7.692308
 
 **** Improved reading skills 
    #+begin_src ipython :exports none :session   :results drawer output
-     skills_to_impact = data_master["Reading skills to impact"]
-     skill_to_impact_count = split_count(skills_to_impact)
-     print(skill_to_impact_count)
+     improved_reading_skills = data_clean["Improved reading skills_coded"]
+     improved_reading_skills_count = split_count(improved_reading_skills)
+     print(improved_reading_skills_count)
+   #+end_src
+
+   #+RESULTS:
+   :results:
+   Improved reading skills_coded   Freq count  Freq (%)
+   word reading                            11     29.73
+   phonological skills                      6     16.22
+   reading comprehension                    4     10.81
+   spelling                                 4     10.81
+   reading fluency                          3      8.11
+   none                                     3      8.11
+   phonics                                  2      5.41
+   sentence reading                         1      2.70
+   rapid automatized naming                 1      2.70
+   vocabulary                               1      2.70
+   reading skills (not specified)           1      2.70
+   :end:
+
 **** Reading skills that didn't improve
      The fact that phonological skills were one of the skills for which more
      studies reported improvements and at the same time reported no improvement
