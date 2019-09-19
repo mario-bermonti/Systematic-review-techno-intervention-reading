@@ -1409,7 +1409,7 @@ los autores mencionaba que las intervenciones s...           1  7.692308
 
 ** Analysis of quantitative data
 #+begin_src ipython :exports none :session   :results drawer output
-  results_quanti = data_master['Number of participants'].describe()
+  results_quanti = data_clean['Number of participants'].describe()
   print(results_quanti.round(2))
 #+end_src
 
