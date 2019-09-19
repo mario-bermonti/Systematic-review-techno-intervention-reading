@@ -48,10 +48,11 @@
   + Participants in group modality
   + Improved reading skills
   + Reading skills no improvement
+* General                                                          :noexport:
   #+begin_src ipython :exports none :session   :results drawer output
     import pandas as pd
-    from stats import formatting
-    formatting.add_org_formatter_ipython()
+    # from stats import formatting
+    # formatting.add_org_formatter_ipython()
   #+end_src
 
   #+RESULTS:
@@ -262,6 +263,8 @@ if desired.
  :results:
  :end:
 
+
+
 ** Paths
 #+begin_src ipython :exports none :session   :results drawer output
   path_data = '../Datos/article_data_master.xlsx'
@@ -293,6 +296,9 @@ if desired.
 
       return data_clean
 #+end_src
+
+
+* Clean the data                                                   :noexport:
 #+begin_src ipython :exports  :session   :results drawer output
   data_master = pd.read_excel(path_data, sheet_name='Form1')
 #+end_src
@@ -311,7 +317,7 @@ if desired.
 :results:
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 21 entries, 0 to 20
-Data columns (total 50 columns):
+Data columns (total 54 columns):
 ID                                          21 non-null int64
 Author                                      21 non-null object
 Year                                        21 non-null int64
@@ -319,6 +325,7 @@ Title                                       21 non-null object
 Purpose                                     21 non-null object
 Cognitive processes to impact               21 non-null object
 Reading skills to impact                    21 non-null object
+Reading skills to impact_coded              21 non-null object
 Design                                      21 non-null object
 Design_coded                                21 non-null object
 Inferred design                             21 non-null object
@@ -358,33 +365,36 @@ Cognitive processes that did not improve    21 non-null int64
 Effect size cognition                       21 non-null object
 Comments effect on cognition                9 non-null float64
 Improved reading skills                     21 non-null object
+Improved reading skills_coded               21 non-null object
 Reading skills no improvement               21 non-null object
+Reading skills no improvement_coded         21 non-null object
 Effect size reading skills                  21 non-null object
+Effect size classification                  16 non-null object
 Comments effect on reading skills           9 non-null object
 General comments                            13 non-null object
-dtypes: float64(1), int64(4), object(45)
-memory usage: 8.3+ KB
+dtypes: float64(1), int64(4), object(49)
+memory usage: 8.9+ KB
 None
-   ID           Author  Year  \
-0   7  Callaghan et al  2016   
-1   8    Cazzell et al  2017   
-2   9             Chai  2017   
-3  11   Comaskey et al  2009   
-4  13     Ecalle et al  2009   
+   ID            Author  Year  \
+0   2  Pindiprolu et al  2019   
+1   3       Moser et al  2017   
+2   4     Potocki et al  2015   
+3   5       Rosas et al  2017   
+4   6       Saine et al  2010   
 
                                                Title  \
-0  A randomized controlled trial of an early inte...   
-1  Evaluating a Computer Flash-Card Sight-Word Re...   
-2  Improving Early Reading Skills in Young Childr...   
-3  A randomised efficacy study of Web-based synth...   
-4  Lasting effects on literacy skills with a comp...   
+0  Evaluating the promise of computer-based readi...   
+1  Supporting fourth-grade students’ word identif...   
+2  Computerized trainings in four groups of strug...   
+3  Impact of a computer-based intervention in\nCh...   
+4  Predicting word-level reading fluency outcomes...   
 
                                              Purpose  \
-0  Evaluate the effectiveness of the commonly use...   
-1  Evaluate the effects of a CFR program with sel...   
-2  Evaluate the effectiveness of using a research...   
-3  Explore the effectiveness of a Web-based liter...   
-4  Examine the effects of a computer-assisted lea...   
+0  Evaluate the effects of parent implemented Fun...   
+1  Examine the effectiveness of word structure pr...   
+2  Determine the effects of a computerized traini...   
+3  Evaluate the impact of an explicit, sustained,...   
+4  Build a model of the predictive value of word-...   
 
   Cognitive processes to impact  \
 0                           888   
@@ -394,83 +404,97 @@ None
 4                           888   
 
                             Reading skills to impact  \
-0                                Phonological skills   
-1                                       Word reading   
-2                                Phonological skills   
-3  Phonological skills, reading skills (not speci...   
-4                  Phonological skills, word reading   
+0  Phonemic awareness, phonics, fluency, vocabula...   
+1  Word identification skills, fluency, vocabular...   
+2  Silent word reading, reading fluency, listenin...   
+3  phonological awareness, letter name knowledge,...   
+4                               word reading fluency   
+
+                      Reading skills to impact_coded  \
+0  word reading, reading fluency, reading compreh...   
+1  reading fluency, vocabulary, reading comprehen...   
+2  word reading, reading fluency, reading compreh...   
+3  word reading, phonological skills, phonics, ra...   
+4                                       word reading   
 
                                               Design  \
-0                           Randomized control trial   
-1              Multiple-baseline across-tasks design   
-2                              Multiple-probe design   
-3    Pre–post-test experimental intervention design.   
-4  Randomised Control Trial design (RCT) with pre...   
+0            pre- and posttest with comparison group   
+1                           Quasi-experimental study   
+2   pretest-posttest with multiple comparison groups   
+3  Experimental: pretest-posttest with comparison...   
+4                                       longitudinal   
 
-                                        Design_coded Inferred design  ...  \
-0     Randomized control trial with pretest-posttest              No  ...   
-1                              Single subject design              No  ...   
-2                              Single subject design              No  ...   
-3  Pretest-posttest design with multiple experime...              No  ...   
-4     Randomized control trial with pretest-posttest              No  ...   
+                                        Design_coded  ...  \
+0  Pretest-posttest design with multiple experime...  ...   
+1    Quasi-experimental design with pretest-posttest  ...   
+2  pretest-posttest design with multiple comparis...  ...   
+3      Pretest-posttest design with comparison group  ...   
+4      Pretest-posttest design with comparison group  ...   
 
-              Comments inferential statistics Improved cognitive processes  \
-0                                         NaN                          888   
-1                No reportaron estadísticas.                           888   
-2  No inferential statistics were  conducted                           888   
-3                                         NaN                          888   
-4                                         NaN                          888   
-
-  Cognitive processes that did not improve Effect size cognition  \
-0                                      888                   888   
-1                                      888                   888   
-2                                      888                   888   
-3                                      888                   888   
-4                                      888                   888   
-
-  Comments effect on cognition  \
-0                          NaN   
-1                          NaN   
-2                        888.0   
-3                        888.0   
-4                          NaN   
+  Effect size cognition  Comments effect on cognition  \
+0                   888                           NaN   
+1                   888                           NaN   
+2                   888                           NaN   
+3                   888                         888.0   
+4                   888                         888.0   
 
                              Improved reading skills  \
-0                         Blending, Non-word reading   
-1                             Sight-word acquisition   
-2                                               None   
-3  Blending CV, Blending VC, rime articulation an...   
-4  Word recognition, aloud word reading, and word...   
+0                               Oral Reading Fluency   
+1                                               None   
+2  word identification, reading fluency, listenin...   
+3     High SES: RAN; low SES: letter sound knowledge   
+4                               word reading fluency   
+
+                       Improved reading skills_coded  \
+0                                    Reading Fluency   
+1                                               None   
+2  word reading, reading fluency, reading compreh...   
+3                  Rapid automatized naming, phonics   
+4                                       word reading   
 
                        Reading skills no improvement  \
-0                               Phoneme segmentation   
-1                                               None   
+0  Initial Sound Fluency, Letter Naming Fluency, ...   
+1  Comprehension, Vocabulary, Oral reading rate, ...   
 2                                               None   
-3  Segmenting CV, Segmenting VC, WRAT word readin...   
+3  Phonological awareness, letter name knowledge,...   
 4                                               None   
 
-        Effect size reading skills  \
-0  n2 = .064 - .070; d = .35 - .36   
-1                              888   
-2                              888   
-3                   n2 = .09 - .15   
-4                   d = .79 - 1.28   
+                 Reading skills no improvement_coded  \
+0         Phonological skills, word reading, phonics   
+1  reading comprehension, Vocabulary, reading flu...   
+2                                               None   
+3        Phonological skills, phonics, word reading    
+4                                               None   
+
+                         Effect size reading skills  \
+0                                           d = .94   
+1                                               888   
+2                                    n2 = .06 - .14   
+3                  n2 = High SES: .26, low SES: .21   
+4  d = Posttest: .22 - 1.01, follow-up: -.30 - 1.01   
+
+                          Effect size classification  \
+0                                              Large   
+1                                                NaN   
+2                                    medium to large   
+3                                              large   
+4  Posttest: small to large, follow-up: small to ...   
 
                    Comments effect on reading skills  \
 0                                                NaN   
-1  Both participants did rapidly acquire words af...   
-2  All children in the current study not only imp...   
+1  Comprehension almost reached statistical signi...   
+2  The results extracted are only focused on the ...   
 3                                                NaN   
-4                                                NaN   
+4  The effect sizes in this study mean the interv...   
 
                                     General comments  
-0  Los autores mencionaba que las intervenciones ...  
-1                                                NaN  
-2  No se presentaron estadísticas descriptivas ni...  
+0  Very little control over the number of session...  
+1  Missing information about instruments and slop...  
+2  The authors were interested in comparing the e...  
 3                                                NaN  
 4                                                NaN  
 
-[5 rows x 50 columns]
+[5 rows x 54 columns]
 :end:
 
 
@@ -484,7 +508,7 @@ count_nans(data_master).to_frame()
 
 #+RESULTS:
 :results:
-# Out[194]:
+# Out[106]:
 #+BEGIN_EXAMPLE
   0
   ID                                         0
@@ -494,6 +518,7 @@ count_nans(data_master).to_frame()
   Purpose                                    0
   Cognitive processes to impact              0
   Reading skills to impact                   0
+  Reading skills to impact_coded             0
   Design                                     0
   Design_coded                               0
   Inferred design                            0
@@ -533,8 +558,11 @@ count_nans(data_master).to_frame()
   Effect size cognition                      0
   Comments effect on cognition              12
   Improved reading skills                    0
+  Improved reading skills_coded              0
   Reading skills no improvement              0
+  Reading skills no improvement_coded        0
   Effect size reading skills                 0
+  Effect size classification                 5
   Comments effect on reading skills         12
   General comments                           8
 #+END_EXAMPLE
@@ -555,11 +583,12 @@ count_nans(data_master).to_frame()
 
 #+RESULTS:
 :results:
-['Randomized control trial with pretest-posttest' 'Single subject design'
- 'Pretest-posttest design with multiple experimental groups' 'Case study'
- 'Pretest-posttest design'
- 'Pretest-posttest design with comparison group(s)']
+['Pretest-posttest design with multiple experimental groups'
+ 'Pretest-posttest design with comparison group(s)'
+ 'Randomized control trial with pretest-posttest' 'Single subject design'
+ 'Case study' 'Pretest-posttest design']
 :end:
+
 *** Grade
 #+begin_src ipython :exports none :session   :results drawer output
    values_to_recode_grade = {"2": "K - 4",
@@ -576,7 +605,7 @@ count_nans(data_master).to_frame()
 
 #+RESULTS:
 :results:
-['Not reported' 'K - 4' '6 - 7']
+['K - 4' '6 - 7' 'Not reported']
 :end:
 
 *** Age
@@ -597,7 +626,7 @@ count_nans(data_master).to_frame()
 
 #+RESULTS:
 :results:
-['4 - 8' '9 - 13' 'Not reported']
+['Not reported' '9 - 13' '4 - 8']
 :end:
 
 *** Session number
@@ -622,7 +651,7 @@ count_nans(data_master).to_frame()
 
 #+RESULTS:
 :results:
-['Not reported' 'less than 20' '40 or more' '20 - 27']
+['40 or more' 'Not reported' '20 - 27' 'less than 20']
 :end:
 
 *** Session duration
@@ -646,7 +675,7 @@ count_nans(data_master).to_frame()
 
 #+RESULTS:
 :results:
-['10 - 30' 'less than 10' 'more than 45' 'Not reported']
+['10 - 30' 'Not reported' 'more than 45' 'less than 10']
 :end:
 
 *** Participants in group modality
@@ -661,13 +690,147 @@ count_nans(data_master).to_frame()
 
 #+RESULTS:
 :results:
-[888 '2 - 3' '4' 'Not reported' '3 - 7']
+[888 'Not reported' '2 - 3' '4' '3 - 7']
+:end:
+
+
+** Lowercase values
+#+begin_src ipython :exports none :session   :results drawer 
+  data_clean = data_master.apply(lambda x: x.str.lower() if(x.dtype == 'object') else x)
+  data_clean.head()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[113]:
+#+BEGIN_EXAMPLE
+  ID            Author  Year  \
+  0   2  pindiprolu et al  2019
+  1   3       moser et al  2017
+  2   4     potocki et al  2015
+  3   5       rosas et al  2017
+  4   6       saine et al  2010
+  
+  Title  \
+  0  evaluating the promise of computer-based readi...
+  1  supporting fourth-grade students’ word identif...
+  2  computerized trainings in four groups of strug...
+  3  impact of a computer-based intervention in\nch...
+  4  predicting word-level reading fluency outcomes...
+  
+  Purpose  \
+  0  evaluate the effects of parent implemented fun...
+  1  examine the effectiveness of word structure pr...
+  2  determine the effects of a computerized traini...
+  3  evaluate the impact of an explicit, sustained,...
+  4  build a model of the predictive value of word-...
+  
+  Cognitive processes to impact  \
+  0                           NaN
+  1                           NaN
+  2                           NaN
+  3                           NaN
+  4                           NaN
+  
+  Reading skills to impact  \
+  0  phonemic awareness, phonics, fluency, vocabula...
+  1  word identification skills, fluency, vocabular...
+  2  silent word reading, reading fluency, listenin...
+  3  phonological awareness, letter name knowledge,...
+  4                               word reading fluency
+  
+  Reading skills to impact_coded  \
+  0  word reading, reading fluency, reading compreh...
+  1  reading fluency, vocabulary, reading comprehen...
+  2  word reading, reading fluency, reading compreh...
+  3  word reading, phonological skills, phonics, ra...
+  4                                       word reading
+  
+  Design  \
+  0            pre- and posttest with comparison group
+  1                           quasi-experimental study
+  2   pretest-posttest with multiple comparison groups
+  3  experimental: pretest-posttest with comparison...
+  4                                       longitudinal
+  
+  Design_coded  ...  \
+  0  pretest-posttest design with multiple experime...  ...
+  1   pretest-posttest design with comparison group(s)  ...
+  2   pretest-posttest design with comparison group(s)  ...
+  3   pretest-posttest design with comparison group(s)  ...
+  4   pretest-posttest design with comparison group(s)  ...
+  
+  Effect size cognition  Comments effect on cognition  \
+  0                   NaN                           NaN
+  1                   NaN                           NaN
+  2                   NaN                           NaN
+  3                   NaN                         888.0
+  4                   NaN                         888.0
+  
+  Improved reading skills  \
+  0                               oral reading fluency
+  1                                               none
+  2  word identification, reading fluency, listenin...
+  3     high ses: ran; low ses: letter sound knowledge
+  4                               word reading fluency
+  
+  Improved reading skills_coded  \
+  0                                    reading fluency
+  1                                               none
+  2  word reading, reading fluency, reading compreh...
+  3                  rapid automatized naming, phonics
+  4                                       word reading
+  
+  Reading skills no improvement  \
+  0  initial sound fluency, letter naming fluency, ...
+  1  comprehension, vocabulary, oral reading rate, ...
+  2                                               none
+  3  phonological awareness, letter name knowledge,...
+  4                                               none
+  
+  Reading skills no improvement_coded  \
+  0         phonological skills, word reading, phonics
+  1  reading comprehension, vocabulary, reading flu...
+  2                                               none
+  3        phonological skills, phonics, word reading
+  4                                               none
+  
+  Effect size reading skills  \
+  0                                           d = .94
+  1                                               888
+  2                                    n2 = .06 - .14
+  3                  n2 = high ses: .26, low ses: .21
+  4  d = posttest: .22 - 1.01, follow-up: -.30 - 1.01
+  
+  Effect size classification  \
+  0                                              large
+  1                                                NaN
+  2                                    medium to large
+  3                                              large
+  4  posttest: small to large, follow-up: small to ...
+  
+  Comments effect on reading skills  \
+  0                                                NaN
+  1  comprehension almost reached statistical signi...
+  2  the results extracted are only focused on the ...
+  3                                                NaN
+  4  the effect sizes in this study mean the interv...
+  
+  General comments
+  0  very little control over the number of session...
+  1  missing information about instruments and slop...
+  2  the authors were interested in comparing the e...
+  3                                                NaN
+  4                                                NaN
+  
+  [5 rows x 54 columns]
+#+END_EXAMPLE
 :end:
 
 * Results
 ** Frequency analysis
 #+begin_src ipython :exports none :session   :results drawer output
-freq_of_multiple_columns(data_master.iloc[:, 2:])
+freq_of_multiple_columns(data_clean.iloc[:, 2:])
 #+end_src
 
 #+RESULTS:
