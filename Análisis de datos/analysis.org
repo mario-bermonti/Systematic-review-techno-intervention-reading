@@ -1132,20 +1132,29 @@ Many statistical analyses were conducted                     1  7.692308
      skills_to_impact = data_master["Reading skills to impact"]
      skill_to_impact_count = split_count(skills_to_impact)
      print(skill_to_impact_count)
+**** Reading skills that didn't improve
+     The fact that phonological skills were one of the skills for which more
+     studies reported improvements and at the same time reported no improvement
+     is related to the fact that various studies address different components
+     of phonological skills. Some were successful while other were not.
+   #+begin_src ipython :exports none :session   :results drawer output
+     reading_skill_no_improvement = data_clean["Reading skills no improvement_coded"]
+     reading_skill_no_improvement_count = split_count(reading_skill_no_improvement)
+     print(reading_skill_no_improvement_count)
    #+end_src
 
    #+RESULTS:
    :results:
-   Reading skills to impact        Freq count  Freq (%)
-   word reading                            13     24.53
-   phonological skills                     13     24.53
-   vocabulary                               7     13.21
-   reading comprehension                    6     11.32
-   phonics                                  4      7.55
-   rapid automatized naming                 3      5.66
-   reading fluency                          3      5.66
-   reading skills (not specified)           2      3.77
-   spelling                                 2      3.77
+   Reading skills no improvement_coded  Freq count  Freq (%)
+   none                                         12     33.33
+   phonological skills                           6     16.67
+   word reading                                  4     11.11
+   phonics                                       4     11.11
+   reading comprehension                         3      8.33
+   vocabulary                                    3      8.33
+   reading fluency                               2      5.56
+   word recognition                              1      2.78
+   spelling                                      1      2.78
    :end:
 
 **** Effect size
