@@ -24,7 +24,19 @@
   + reading fluency
   + spelling
   + reading: Otherwise not specified
-* General 
+- The following criteria was used to interpret the effect sizes (Cohen, 1988). These arbitrary
+  cut-off points are only used to facilitate interpretation and should not 
+  be used to interpret the results blindly, as it is often done, which is not appropriate.
+  Even Cohen, himself, advised against it.
+  + Cohen's d and Hedges' G
+    * small: 0.2 - 0.49
+    * medium: 0.5 - 0.79
+    * large: 0.8 or greater
+  + eta squared: 
+    * small: .01 - .05
+    * medium: 0.06 - .13
+    * large: 0.14 or greater
+
   #+begin_src ipython :exports none :session   :results drawer output
     import pandas as pd
     from stats import formatting
